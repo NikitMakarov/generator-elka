@@ -1,28 +1,18 @@
 # generator-elka [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url]
 > learning-stuff
 
-## Installation
-
-First, install [Yeoman](http://yeoman.io) and generator-elka using [npm](https://www.npmjs.com/) (we assume you have pre-installed [node.js](https://nodejs.org/)).
-
+## Установка
+ Скачиваем Yeoman и сам генератор с помощью следующих двух команд в консоли ( [node.js](https://nodejs.org/en/). же у вас установлен?)
 ```bash
 npm install -g yo
 npm install -g generator-elka
 ```
-
-Then generate your new project:
-
+## Использование
+ Открыв нужную папку в консоли ввести команду 
 ```bash
 yo elka
 ```
-
-## Getting To Know Yeoman
-
- * Yeoman has a heart of gold.
- * Yeoman is a person with feelings and opinions, but is very easy to work with.
- * Yeoman can be too opinionated at times but is easily convinced not to be.
- * Feel free to [learn more about Yeoman](http://yeoman.io/).
-
+И следовать дальнейшим инструкциям в консоли
 ## License
 
 unlicense © [Nikita]()
