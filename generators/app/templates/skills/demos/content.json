@@ -1,0 +1,33 @@
+{
+  "v": 0.1,
+  "active_step": 23,
+  "name": "",
+  "preview_type": 0,
+  "steps": [
+    {
+      "active_editor": 0,
+      "description": "",
+      "editors": {
+        "html": "",
+        "css": ""
+      },
+      "scale": "100%",
+      "selections": {
+        "html": [
+          {
+            "start": { "row": 0, "column": 0 },
+            "end": { "row": 0, "column": 0 }
+          }
+        ],
+        "css": [
+          {
+            "start": { "row": 0, "column": 0 },
+            "end": { "row": 0, "column": 0 }
+          }
+        ]
+      },
+      "zoom": 1,
+      "is_panel_active": true
+    }
+  ]
+}
