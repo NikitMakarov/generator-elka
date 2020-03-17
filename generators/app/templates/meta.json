@@ -1,4 +1,18 @@
 {
   "title": "Задание <%= title %>",
-  "type": "<%= type %>"
+  "type": "<%= type %>",
+  "files": [
+    {
+      "src": "index.html",
+      "visible": true,
+      "enabled": true,
+      "active": true
+    },
+    {
+      "src": "style.css"
+    },
+    {
+      "src": "script.js"
+    }
+  ]
 }

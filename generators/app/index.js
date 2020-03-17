@@ -333,7 +333,7 @@ module.exports = class extends yeoman {
         if (this.answers.typeChallenge === "html-css-js-iframe-challenge") {
           this.fs.copyTpl(
             this.templatePath("challenge/check.client.js"),
-            this.destinationPath(`${challenge}-task/check.client.js`),
+            this.destinationPath(`${challenge}-challenge/check.client.js`),
             {
               view: "HtmlCssJsIframeView",
               runner: "HtmlCssJsIframeRunner",
@@ -343,7 +343,7 @@ module.exports = class extends yeoman {
 
           this.fs.copyTpl(
             this.templatePath("challenge/meta.json"),
-            this.destinationPath(`${challenge}-task/meta.json`),
+            this.destinationPath(`${challenge}-challenge/meta.json`),
             {
               title: this.answers.challengeName,
               type: "html-css-js-iframe-challenge"
@@ -354,7 +354,7 @@ module.exports = class extends yeoman {
         if (this.answers.typeChallenge === "html-css-challenge") {
           this.fs.copyTpl(
             this.templatePath("challenge/check.client.js"),
-            this.destinationPath(`${challenge}-task/check.client.js`),
+            this.destinationPath(`${challenge}-challenge/check.client.js`),
             {
               view: "HtmlCssChallengeView",
               runner: "HtmlCssRunner",
@@ -364,7 +364,7 @@ module.exports = class extends yeoman {
 
           this.fs.copyTpl(
             this.templatePath("challenge/meta.json"),
-            this.destinationPath(`${challenge}-task/meta.json`),
+            this.destinationPath(`${challenge}-challenge/meta.json`),
             {
               title: this.answers.challengeName,
               type: "html-css-challenge"
@@ -375,7 +375,7 @@ module.exports = class extends yeoman {
         if (this.answers.typeChallenge === "js-challenge") {
           this.fs.copyTpl(
             this.templatePath("challenge/check.client.js"),
-            this.destinationPath(`${challenge}-task/check.client.js`),
+            this.destinationPath(`${challenge}-challenge/check.client.js`),
             {
               view: `JsView`,
               runner: `JsRunner, function () {
@@ -387,7 +387,7 @@ module.exports = class extends yeoman {
 
           this.fs.copyTpl(
             this.templatePath("challenge/meta.json"),
-            this.destinationPath(`${challenge}-task/meta.json`),
+            this.destinationPath(`${challenge}-challenge/meta.json`),
             {
               title: this.answers.challengeName,
               type: "js-challenge"
@@ -397,32 +397,32 @@ module.exports = class extends yeoman {
 
         this.fs.copyTpl(
           this.templatePath("code/index.html"),
-          this.destinationPath(`${challenge}-task/code/index.html`)
+          this.destinationPath(`${challenge}-challenge/code/index.html`)
         );
 
         this.fs.copyTpl(
           this.templatePath("code/index.php"),
-          this.destinationPath(`${challenge}-task/code/index.php`)
+          this.destinationPath(`${challenge}-challenge/code/index.php`)
         );
 
         this.fs.copyTpl(
           this.templatePath("code/script.js"),
-          this.destinationPath(`${challenge}-task/code/script.js`)
+          this.destinationPath(`${challenge}-challenge/code/script.js`)
         );
 
         this.fs.copyTpl(
           this.templatePath("code/style.css"),
-          this.destinationPath(`${challenge}-task/code/style.css`)
+          this.destinationPath(`${challenge}-challenge/code/style.css`)
         );
 
         this.fs.copyTpl(
           this.templatePath("goals.html"),
-          this.destinationPath(`${challenge}-task/goals.html`)
+          this.destinationPath(`${challenge}-challenge/goals.html`)
         );
 
         this.fs.copyTpl(
           this.templatePath("theory.html"),
-          this.destinationPath(`${challenge}-task/theory.html`)
+          this.destinationPath(`${challenge}-challenge/theory.html`)
         );
       }
 
