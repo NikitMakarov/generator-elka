@@ -236,7 +236,7 @@ module.exports = class extends yeoman {
               {
                 view: "HtmlCssView",
                 runner: "HtmlCssRunner",
-                checker: "PhpChecker"
+                checker: "HtmlCssJsChecker"
               }
             );
 
