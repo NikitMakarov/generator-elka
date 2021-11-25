@@ -1,5 +1,5 @@
 "use strict";
-var yeoman = require("yeoman-generator");
+const yeoman = require("yeoman-generator");
 module.exports = class extends yeoman {
   async prompting() {
     this.answers = await this.prompt([
@@ -17,6 +17,18 @@ module.exports = class extends yeoman {
           }
         ],
         message: "Новый интерактивный курс или навык?"
+      },
+      {
+        type: "input",
+        name: "courseName",
+        when: currentAnswers => currentAnswers.courseOrSkill === "course",
+        message: "Введите название главы"
+      },
+      {
+        type: "input",
+        name: "courseDescription",
+        when: currentAnswers => currentAnswers.courseOrSkill === "course",
+        message: "Введите описание для главы"
       },
       {
         type: "list",
@@ -118,13 +130,21 @@ module.exports = class extends yeoman {
     const name = this.answers.name;
     const sum = Number(this.answers.task) + 1;
     const challenge = Number(this.answers.task) + 2;
+    let nameCount;
+    // Создаем папки и файлы для заданий
     if (this.answers.courseOrSkill === "course") {
       for (let i = 1; i <= task; i++) {
         if (i < 10) {
-          if (this.answers.checkClient === "html") {
+          nameCount = "0" + i;
+        } else {
+          nameCount = i;
+        }
+
+        switch (this.answers.checkClient) {
+          case "html":
             this.fs.copyTpl(
               this.templatePath("check.client.js"),
-              this.destinationPath(`0${i}-task/check.client.js`),
+              this.destinationPath(`${nameCount}-task/check.client.js`),
               {
                 view: "HtmlCssView",
                 runner: "HtmlCssRunner",
@@ -134,265 +154,155 @@ module.exports = class extends yeoman {
 
             this.fs.copyTpl(
               this.templatePath("meta.json"),
-              this.destinationPath(`0${i}-task/meta.json`),
+              this.destinationPath(`${nameCount}-task/meta.json`),
               { title: i, type: "html" }
             );
-          }
-
-          if (this.answers.checkClient === "js") {
+            break;
+          case "js":
             this.fs.copyTpl(
               this.templatePath("check.client.js"),
-              this.destinationPath(`0${i}-task/check.client.js`),
+              this.destinationPath(`${nameCount}-task/check.client.js`),
               {
                 view: "JsView",
                 runner: "JsRunner",
                 checker: "JsChecker"
               }
             );
-
             this.fs.copyTpl(
               this.templatePath("meta.json"),
-              this.destinationPath(`0${i}-task/meta.json`),
+              this.destinationPath(`${nameCount}-task/meta.json`),
               { title: i, type: "js" }
             );
-          }
-
-          if (this.answers.checkClient === "html-css-js") {
+            break;
+          case "html-css-js":
             this.fs.copyTpl(
               this.templatePath("check.client.js"),
-              this.destinationPath(`0${i}-task/check.client.js`),
-              {
-                view: "HtmlCssView",
-                runner: "HtmlCssRunner",
-                checker: "PhpChecker"
-              }
-            );
-
-            this.fs.copyTpl(
-              this.templatePath("meta.json"),
-              this.destinationPath(`0${i}-task/meta.json`),
-              { title: i, type: this.answers.type }
-            );
-          }
-
-          if (this.answers.checkClient === "php") {
-            this.fs.copyTpl(
-              this.templatePath("check.client.js"),
-              this.destinationPath(`0${i}-task/check.client.js`),
-              {
-                view: "PhpView",
-                runner: "PhpRunner",
-                checker: "PhpChecker"
-              }
-            );
-
-            this.fs.copyTpl(
-              this.templatePath("meta.json"),
-              this.destinationPath(`0${i}-task/meta.json`),
-              { title: i, type: "php" }
-            );
-          }
-        } else {
-          if (this.answers.checkClient === "html") {
-            this.fs.copyTpl(
-              this.templatePath("check.client.js"),
-              this.destinationPath(`${i}-task/check.client.js`),
+              this.destinationPath(`${nameCount}-task/check.client.js`),
               {
                 view: "HtmlCssView",
                 runner: "HtmlCssRunner",
                 checker: "HtmlCssJsChecker"
               }
             );
-
             this.fs.copyTpl(
               this.templatePath("meta.json"),
-              this.destinationPath(`${i}-task/meta.json`),
-              { title: i, type: "html" }
-            );
-          }
-
-          if (this.answers.checkClient === "js") {
-            this.fs.copyTpl(
-              this.templatePath("check.client.js"),
-              this.destinationPath(`${i}-task/check.client.js`),
-              {
-                view: "JsView",
-                runner: "JsRunner",
-                checker: "JsChecker"
-              }
-            );
-
-            this.fs.copyTpl(
-              this.templatePath("meta.json"),
-              this.destinationPath(`${i}-task/meta.json`),
-              { title: i, type: "js" }
-            );
-          }
-
-          if (this.answers.checkClient === "html-css-js") {
-            this.fs.copyTpl(
-              this.templatePath("check.client.js"),
-              this.destinationPath(`${i}-task/check.client.js`),
-              {
-                view: "HtmlCssView",
-                runner: "HtmlCssRunner",
-                checker: "HtmlCssJsChecker"
-              }
-            );
-
-            this.fs.copyTpl(
-              this.templatePath("meta.json"),
-              this.destinationPath(`${i}-task/meta.json`),
+              this.destinationPath(`${nameCount}-task/meta.json`),
               { title: i, type: this.answers.type }
             );
-          }
-
-          if (this.answers.checkClient === "php") {
+            break;
+          case "php":
             this.fs.copyTpl(
               this.templatePath("check.client.js"),
-              this.destinationPath(`${i}-task/check.client.js`),
+              this.destinationPath(`${nameCount}-task/check.client.js`),
               {
                 view: "PhpView",
                 runner: "PhpRunner",
                 checker: "PhpChecker"
               }
             );
-
             this.fs.copyTpl(
               this.templatePath("meta.json"),
-              this.destinationPath(`${i}-task/meta.json`),
+              this.destinationPath(`${nameCount}-task/meta.json`),
               { title: i, type: "php" }
             );
-          }
+            this.fs.copyTpl(
+              this.templatePath("code/index.php"),
+              this.destinationPath(`${nameCount}-task/code/index.php`)
+            );
+            break;
+          default:
+            break;
         }
 
-        if (i < 10) {
-          this.fs.copyTpl(
-            this.templatePath("goals.html"),
-            this.destinationPath(`0${i}-task/goals.html`)
-          );
+        this.fs.copyTpl(
+          this.templatePath("goals.html"),
+          this.destinationPath(`${nameCount}-task/goals.html`)
+        );
 
-          this.fs.copyTpl(
-            this.templatePath("theory.html"),
-            this.destinationPath(`0${i}-task/theory.html`)
-          );
+        this.fs.copyTpl(
+          this.templatePath("theory.html"),
+          this.destinationPath(`${nameCount}-task/theory.html`)
+        );
 
-          this.fs.copyTpl(
-            this.templatePath("code/index.html"),
-            this.destinationPath(`0${i}-task/code/index.html`)
-          );
+        this.fs.copyTpl(
+          this.templatePath("code/index.html"),
+          this.destinationPath(`${nameCount}-task/code/index.html`)
+        );
 
-          this.fs.copyTpl(
-            this.templatePath("code/index.php"),
-            this.destinationPath(`0${i}-task/code/index.php`)
-          );
+        this.fs.copyTpl(
+          this.templatePath("code/style.css"),
+          this.destinationPath(`${nameCount}-task/code/style.css`)
+        );
 
-          this.fs.copyTpl(
-            this.templatePath("code/style.css"),
-            this.destinationPath(`0${i}-task/code/style.css`)
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("code/script.js"),
-            this.destinationPath(`0${i}-task/code/script.js`)
-          );
-        } else {
-          this.fs.copyTpl(
-            this.templatePath("goals.html"),
-            this.destinationPath(`${i}-task/goals.html`)
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("theory.html"),
-            this.destinationPath(`${i}-task/theory.html`)
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("code/index.html"),
-            this.destinationPath(`${i}-task/code/index.html`)
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("code/index.php"),
-            this.destinationPath(`${i}-task/code/index.php`)
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("code/style.css"),
-            this.destinationPath(`${i}-task/code/style.css`)
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("code/script.js"),
-            this.destinationPath(`${i}-task/code/script.js`)
-          );
-        }
+        this.fs.copyTpl(
+          this.templatePath("code/script.js"),
+          this.destinationPath(`${nameCount}-task/code/script.js`)
+        );
       }
 
+      // Создаем папки и файлы для испытаний
       if (this.answers.challenge === true) {
-        if (this.answers.typeChallenge === "html-css-js-iframe-challenge") {
-          this.fs.copyTpl(
-            this.templatePath("challenge/check.client.js"),
-            this.destinationPath(`${challenge}-challenge/check.client.js`),
-            {
-              view: "HtmlCssJsIframeView",
-              runner: "HtmlCssJsIframeRunner",
-              checker: "HtmlCssJsIframeChallengeChecker, function () {}"
-            }
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("challenge/meta.json"),
-            this.destinationPath(`${challenge}-challenge/meta.json`),
-            {
-              title: this.answers.challengeName,
-              type: "html-css-js-iframe-challenge"
-            }
-          );
-        }
-
-        if (this.answers.typeChallenge === "html-css-challenge") {
-          this.fs.copyTpl(
-            this.templatePath("challenge/check.client.js"),
-            this.destinationPath(`${challenge}-challenge/check.client.js`),
-            {
-              view: "HtmlCssChallengeView",
-              runner: "HtmlCssRunner",
-              checker: "HtmlCssChallengeChecker"
-            }
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("challenge/meta.json"),
-            this.destinationPath(`${challenge}-challenge/meta.json`),
-            {
-              title: this.answers.challengeName,
-              type: "html-css-challenge"
-            }
-          );
-        }
-
-        if (this.answers.typeChallenge === "js-challenge") {
-          this.fs.copyTpl(
-            this.templatePath("challenge/check.client.js"),
-            this.destinationPath(`${challenge}-challenge/check.client.js`),
-            {
-              view: `JsView`,
-              runner: `JsRunner, function () {
-    this.enableChallenge();
-  }`,
-              checker: `JsChallengeChecker, function () {}`
-            }
-          );
-
-          this.fs.copyTpl(
-            this.templatePath("challenge/meta.json"),
-            this.destinationPath(`${challenge}-challenge/meta.json`),
-            {
-              title: this.answers.challengeName,
-              type: "js-challenge"
-            }
-          );
+        switch (this.answers.typeChallenge) {
+          case "html-css-js-iframe-challenge":
+            this.fs.copyTpl(
+              this.templatePath("challenge/check.client.js"),
+              this.destinationPath(`${challenge}-challenge/check.client.js`),
+              {
+                view: "HtmlCssJsIframeView",
+                runner: "HtmlCssJsIframeRunner",
+                checker: "HtmlCssJsIframeChallengeChecker, function () {}"
+              }
+            );
+            this.fs.copyTpl(
+              this.templatePath("challenge/meta.json"),
+              this.destinationPath(`${challenge}-challenge/meta.json`),
+              {
+                title: this.answers.challengeName,
+                type: "html-css-js-iframe-challenge"
+              }
+            );
+            break;
+          case "html-css-challenge":
+            this.fs.copyTpl(
+              this.templatePath("challenge/check.client.js"),
+              this.destinationPath(`${challenge}-challenge/check.client.js`),
+              {
+                view: "HtmlCssChallengeView",
+                runner: "HtmlCssRunner",
+                checker: "HtmlCssChallengeChecker"
+              }
+            );
+            this.fs.copyTpl(
+              this.templatePath("challenge/meta.json"),
+              this.destinationPath(`${challenge}-challenge/meta.json`),
+              {
+                title: this.answers.challengeName,
+                type: "html-css-challenge"
+              }
+            );
+            break;
+          case "js-challenge":
+            this.fs.copyTpl(
+              this.templatePath("challenge/check.client.js"),
+              this.destinationPath(`${challenge}-challenge/check.client.js`),
+              {
+                view: `JsView`,
+                runner: `JsRunner, function () {
+      this.enableChallenge();
+    }`,
+                checker: `JsChallengeChecker, function () {}`
+              }
+            );
+            this.fs.copyTpl(
+              this.templatePath("challenge/meta.json"),
+              this.destinationPath(`${challenge}-challenge/meta.json`),
+              {
+                title: this.answers.challengeName,
+                type: "js-challenge"
+              }
+            );
+            break;
+          default:
         }
 
         this.fs.copyTpl(
@@ -426,9 +336,14 @@ module.exports = class extends yeoman {
         );
       }
 
-      this.fs.copy(
+      // Мета и конспект
+      this.fs.copyTpl(
         this.templatePath("code/meta.json"),
-        this.destinationPath("meta.json")
+        this.destinationPath(`meta.json`),
+        {
+          title: this.answers.courseName,
+          description: this.answers.courseDescription
+        }
       );
       this.fs.copy(
         this.templatePath("code/summary/check.client.js"),
@@ -444,6 +359,7 @@ module.exports = class extends yeoman {
       );
     }
 
+    // Навычная
     if (this.answers.courseOrSkill === "skill") {
       this.fs.write(this.destinationPath("src/pages/.gitkeep"), "");
       this.fs.copyTpl(

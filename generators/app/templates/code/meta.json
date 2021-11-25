@@ -1,5 +1,5 @@
 {
-  "title": "Новая глава",
-  "description": "",
+  "title": "Задание <%= title %>",
+  "description": "<%= description %>",
   "category": ""
 }
